@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GitHubCalendar } from 'react-github-calendar';
-
+import axios from "axios"
+import {Toaster,toast} from "react-hot-toast"
 import { 
   FaEnvelope, 
   FaPhone, 
@@ -19,11 +20,12 @@ import emailjs from '@emailjs/browser';
 const ContactSection = ({ onSectionChange }) => {
   const formRef = useRef();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    Name: '',
+    Email: '',
+    Subject: '',
+    Message: ''
   });
+  console.log("This is contact form",formData)
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const [activeField, setActiveField] = useState(null);
@@ -79,56 +81,28 @@ const ContactSection = ({ onSectionChange }) => {
     }
   ];
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+const handleChange=(e)=>{
+  setFormData({...formData,[e.target.name]:e.target.value})
+}
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    try {
-      // Replace with your EmailJS credentials
-      await emailjs.send(
-        'service_your_service_id',
-        'template_your_template_id',
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-          to_name: 'Prateek'
-        },
-        'your_public_key'
-      );
-
-      setSubmitStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
-
-      setTimeout(() => {
-        setSubmitStatus(null);
-      }, 5000);
-    } catch (error) {
-      console.error('Email sending failed:', error);
-      setSubmitStatus('error');
-      
-      setTimeout(() => {
-        setSubmitStatus(null);
-      }, 5000);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+const handleSubmit=async(e)=>{
+  e.preventDefault()
+  if(!formData.Name || !formData.Email || !formData.Subject || !formData.Message){
+    return toast.error("All fields are required")
+  }
+  try{
+    const response = await axios.post('http://localhost:4000/api/contacts',formData,{
+      "headers":{
+        "Content-Type":"application/json"
+      }
+    })
+    console.log("this is response",response)
+    toast.success("form has been submitted successfully")
+  }catch(error){
+    console.log("error",error)
+    toast.error("Something went wrong")
+  }
+}
 
   // Hover handlers
   const handleContactCardHover = (e, hasLink) => {
@@ -364,8 +338,8 @@ const ContactSection = ({ onSectionChange }) => {
                       }}>
                         <input
                           type="text"
-                          name="name"
-                          value={formData.name}
+                          name="Name"
+                          value={formData.Name}
                           onChange={handleChange}
                           onFocus={() => handleInputFocus('name')}
                           onBlur={handleInputBlur}
@@ -373,7 +347,7 @@ const ContactSection = ({ onSectionChange }) => {
                           style={styles.input}
                           placeholder="John Doe"
                         />
-                        {formData.name && (
+                        {formData.Name && (
                           <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
@@ -394,8 +368,8 @@ const ContactSection = ({ onSectionChange }) => {
                       }}>
                         <input
                           type="email"
-                          name="email"
-                          value={formData.email}
+                          name="Email"
+                          value={formData.Email}
                           onChange={handleChange}
                           onFocus={() => handleInputFocus('email')}
                           onBlur={handleInputBlur}
@@ -403,7 +377,7 @@ const ContactSection = ({ onSectionChange }) => {
                           style={styles.input}
                           placeholder="john@example.com"
                         />
-                        {formData.email && (
+                        {formData.Email && (
                           <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
@@ -426,8 +400,8 @@ const ContactSection = ({ onSectionChange }) => {
                     }}>
                       <input
                         type="text"
-                        name="subject"
-                        value={formData.subject}
+                        name="Subject"
+                        value={formData.Subject}
                         onChange={handleChange}
                         onFocus={() => handleInputFocus('subject')}
                         onBlur={handleInputBlur}
@@ -435,7 +409,7 @@ const ContactSection = ({ onSectionChange }) => {
                         style={styles.input}
                         placeholder="Project Inquiry"
                       />
-                      {formData.subject && (
+                      {formData.Subject && (
                         <motion.div
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
@@ -456,8 +430,8 @@ const ContactSection = ({ onSectionChange }) => {
                       boxShadow: activeField === 'message' ? '0 0 0 3px rgba(59, 130, 246, 0.1)' : 'none'
                     }}>
                       <textarea
-                        name="message"
-                        value={formData.message}
+                        name="Message"
+                        value={formData.Message}
                         onChange={handleChange}
                         onFocus={() => handleInputFocus('message')}
                         onBlur={handleInputBlur}
@@ -466,7 +440,7 @@ const ContactSection = ({ onSectionChange }) => {
                         style={styles.textarea}
                         placeholder="Tell me about your project..."
                       />
-                      {formData.message && (
+                      {formData.Message && (
                         <motion.div
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
@@ -663,6 +637,7 @@ const ContactSection = ({ onSectionChange }) => {
           </motion.div>
         </div>
       </div>
+      <Toaster/>
     </>
   );
 };
