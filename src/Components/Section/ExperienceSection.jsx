@@ -4,11 +4,19 @@ import { FaBriefcase, FaCalendar, FaMapMarkerAlt } from 'react-icons/fa';
 
 const ExperienceSection = ({ onSectionChange }) => {
   const experiences = [
+     {
+      company: "PoolXindia.pvt.ltd.",
+      position: "Full Stack Developer",
+      period: "2026 - Present",
+      location: "Noida sector 58",
+      description: "Building scalable React frontends, secure Node.js APIs, and role-based admin dashboards using JWT authentication and MongoDB.",
+      technologies: ["React", "Node.js", "MongoDB", "JWT", "Express"],
+    },
     {
       company: "Goverdhan Learning Cloud Pvt Ltd.",
       position: "Full Stack Developer",
       period: "2026 - Present",
-      location: "Remote",
+      location: "Lajpat Nagar",
       description: "Building scalable React frontends, secure Node.js APIs, and role-based admin dashboards using JWT authentication and MongoDB.",
       technologies: ["React", "Node.js", "MongoDB", "JWT", "Express"],
     },
@@ -16,7 +24,7 @@ const ExperienceSection = ({ onSectionChange }) => {
       company: "Royal Collection Hotels and Resorts",
       position: "MERN Stack Developer",
       period: "2024 - 2025",
-      location: "Remote",
+      location: "Nawada ",
       description: "Developed full-stack applications for various clients including hospitality and government sectors.",
       technologies: ["React", "Express", "MongoDB", "Redux", "Socket.io"],
     },
@@ -24,7 +32,7 @@ const ExperienceSection = ({ onSectionChange }) => {
       company: "SKS Tech Solutions",
       position: "Full Stack Developer",
       period: "2023 - 2024",
-      location: "GitHub",
+      location: "noida sector 63",
       description: "Contributed to various open-source projects and built personal projects to enhance skills.",
       technologies: ["JavaScript", "React", "Node.js", "Git", "Docker"],
     },
@@ -32,7 +40,7 @@ const ExperienceSection = ({ onSectionChange }) => {
       company: "Triangle Syscoms Pvt Ltd",
       position: "Internship- As a full Stack Developer",
       period: "2022- 2023",
-      location: "GitHub",
+      location: "Dwarka sector 11",
       description: "Contributed to various open-source projects and built personal projects to enhance skills.",
       technologies: ["JavaScript", "React", "Node.js", "Git", "Docker"],
     },
