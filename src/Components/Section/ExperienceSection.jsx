@@ -15,7 +15,7 @@ const ExperienceSection = ({ onSectionChange }) => {
     {
       company: "Goverdhan Learning Cloud Pvt Ltd.",
       position: "Full Stack Developer",
-      period: "2026 - Present",
+      period: "2025 - 2026",
       location: "Lajpat Nagar",
       description: "Building scalable React frontends, secure Node.js APIs, and role-based admin dashboards using JWT authentication and MongoDB.",
       technologies: ["React", "Node.js", "MongoDB", "JWT", "Express"],
